@@ -1,0 +1,173 @@
+/* ------------------ */
+/* 🔁 Reset           */
+/* ------------------ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  font-family: Helvetica, serif;
+}
+
+/* ------------------ */
+/* 🖼️  Sections       */
+/* ------------------ */
+.section {
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 100px 40px 0 40px;
+  color: white;
+  text-align: center;
+}
+
+/* Hintergrundbilder */
+.bg1 {
+  background-image: url('images/strand.jpg');
+}
+
+/* ------------------ */
+/* 📸 Bildreihe       */
+/* ------------------ */
+
+.section.bildstreifen {
+  height: 100vh;               /* volle Höhe wie das erste Bild */
+  width: 100vw;                /* volle Breite */
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background: none;
+}
+
+.bildreihe {
+  display: flex;
+  flex-wrap: wrap;              /* Umbruch, wenn der Bildschirm zu schmal wird */
+  justify-content: space-between; /* Zwischenräume zwischen den Bildern */
+  width: 100%;                  /* Volle Breite des Containers */
+  height: 100%;                 /* Höhe des Containers füllen */
+}
+
+.bildreihe img {
+  flex: 1;
+  height: 100%;
+  object-fit: cover;            /* Bild anpassen ohne Verzerrung */
+  margin: 0;                    /* Abstand entfernen */
+}
+
+
+/* 📱 Responsive */
+@media (min-width: 900px) {
+  .bildreihe img {
+    width: 48%;                 /* 2 Bilder nebeneinander */
+  }
+}
+
+@media (max-width: 900px) {
+  .bildreihe img {
+    width: 48%;                 /* Zwei Bilder nebeneinander */
+  }
+}
+
+@media (max-width: 600px) {
+  .bildreihe img {
+    width: 100%;                /* Ein Bild pro Zeile */
+  }
+}
+
+
+/* ------------------ */
+/* 📝 Überschrift     */
+/* ------------------ */
+.section h1 {
+  font-size: 4rem;
+  font-weight: 500;
+  color: rgba(138, 111, 61);
+  font-family: "Playfair Display", serif; /* elegante Überschrift */
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.3); /* bessere Lesbarkeit über Foto */
+}
+
+
+/* ------------------ */
+/* ☰ Menü-Button      */
+/* ------------------ */
+.menu-toggle {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 2rem;
+  color: white;
+  background: rgba(0,0,0,0.5);
+  padding: 8px 12px;
+  border-radius: 4px;
+  z-index: 1001;
+  cursor: pointer;
+}
+
+
+/* ------------------ */
+/* 📋 Overlay-Menü    */
+/* ------------------ */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 15%;
+  height: 100%;
+  background: rgba(216, 199, 159, 0.8);; /* fast gleiche Farbe wie Hauptseite */
+  color: #000; /* schwarze Schrift */
+  display: none;
+  z-index: 1000;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 3rem 1rem;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+}
+
+.menu-overlay.open {
+  display: flex;
+}
+
+.menu-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 4rem;
+}
+
+.menu-content a {
+  font-size: 1.1rem; /* leicht größer für bessere Lesbarkeit */
+  font-weight: 600; /* seriös, nicht zu fett */
+  text-decoration: none; /* keine Unterstreichung */
+  color: #fdfdfd; /* dunkles Grau, angenehmer als Weiß */
+  font-family: "Lato", sans-serif; /* moderne, klare Schrift */
+  display: block; /* sorgt für klickbare Fläche */
+  padding: 0.5rem 1rem; /* Abstand für bessere Klickbarkeit */
+  border-radius: 0.5rem; /* weiche Ecken */
+  transition: all 0.3s ease; /* sanfte Animation */
+}
+
+.menu-content a:hover {
+  background-color: #d8c79f; /* warmes Sand-Beige beim Hover */
+  color: #8a6f3d; /* Gold-Braun für Kontrast */
+}
+
+.menu-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+}

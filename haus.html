@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, nofollow">
+  <title>Ostseehaus Barendorf</title>
+  <link rel="stylesheet" href="menu.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      background-color: #f3e7d3;
+      color: #000;
+      font-family: Cambria, serif;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1,h2,h3 { font-weight: 700; }
+    h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 3rem;
+    color: #8a6f3d;
+    margin-bottom: 1rem;
+    }    
+    h2 { font-size: 1.6rem; margin-top: 2.5rem; margin-bottom: 1rem; }
+    h3 { font-size: 1.2rem; margin-top: 1.8rem; margin-bottom: 0.6rem; }
+    p { margin-bottom: 1rem; }
+    ul {
+      padding-left: 3rem;
+    }
+    strong { font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<div id="menu-container"></div>
+
+<div class="content">
+  <h1>Ostseehaus Barendorf</h1>
+  <p><strong>wunderschönes Ferienhaus mit Garten und Weitblick für bis zu 12 Personen, Naturstrand fußläufig erreichbar</strong></p>
+
+  <p>Das Haus hat insgesamt 155 qm Wohnfläche. Unten befindet sich ein geräumiger Wohn, Ess- und Kochbereich. Am großen Esstisch finden 8-10 Personen Platz. An den Wohnbereich grenzt eine große Terrasse mit Ausrichtung nach Süden. Im Obergeschoss sind drei Schlafzimmer, unter dem Dach sind zwei weitere Räume. Das Haus hat zwei Badezimmer, eins mit Dusche, Badewanne, Toilette, eins mit Dusche und Toilette. An das Badezimmer im Obergeschoss ist eine Sauna angeschlossen. Das Haus ist von einem herrlichen, naturnahen Garten umgeben. Besonders schön ist der weite Blick über die Felder, auf denen sich oft die Kraniche niederlassen, saisonal auch Wildgänse.</p>
+
+  <h3>Schlafzimmer 1:</h3>
+  <p>Das Schlafzimmer hat ein Doppelbett mit einer 160 cm breiten Matratze.</p>
+
+  <h3>Schlafzimmer 2:</h3>
+  <p>In diesem Schlafzimmer steht ein Doppelbett mit zwei getrennten Matratzen (jeweils 80, insgesamt 160 cm breit).</p>
+
+  <h3>Schlafzimmer 3:</h3>
+  <p>Hier stehen zwei Einzelbetten (80 cm), unter denen jeweils ein weiteres Bett steht. Bei Bedarf verfügt das Zimmer damit über vier Einzelbetten, zwei davon sind allerdings mit dünneren Matratzen ausgestattet und eher für Kinder geeignet.</p>
+
+  <p>Vom Flur gelangt man auf den Dachboden, wo zwei weitere Räume als zusätzliche Schlafzimmer genutzt werden können. Bitte beachten, dass die Treppe für kleine Kinder oder ältere Menschen nicht geeignet ist.</p>
+
+  <h3>Die Ausstattung:</h3>
+  <p>Küche: Großer Kühl- und Gefrierschrank, Wasserkocher, Toaster, Handmixer, Pürierstab, Geschirr für ca. 12 Personen, viele Gläser, Salatschleuder, Backform, Auflaufform, Teekanne, kleine Moccakanne etc. In einigen Schubladen sind unverderbliche Lebensmittel unserer Familie gelagert, falls ihr sie aufbraucht bitte nachkaufen oder Bescheid geben.</p>
+
+  <p>Das Haus hat Glasfaserinternet mit W-Lan-Router, im Wohnzimmer einen (kleinen) Fernseher mit Satellitenfernsehen und Firestick und eine Bose-Soundbar. Im oberen Badezimmer befindet sich eine Sauna.</p>
+
+  <p>Im Schuppen sind ca. 8 Fahrräder, die gerne genutzt werden können. Falls ein Fahrrad mal einen Platten haben sollte, gibt es eine Fahrradpumpe und Flickzeug, um es zu reparieren. Um die Ecke ist ein Fahrradverleih, wo es besser gepflegte Fahrräder zu mieten gibt. Außerdem gibt es im Schuppen ein StandUpPaddelboard.</p>
+
+  <p>Auf der Terrasse sind zwei Tische, im Schuppen sind weitere Klappstühle und Liegen. Es gibt einen kleinen Grill und eine Feuerstelle im Garten.</p>
+
+  <p>Bettwäsche und Handtücher nach Möglichkeit bitte mitbringen. Wenn ihr Bettwäsche oder Handtücher aus dem Wäscheschrank nutzt, wascht und trocknet bitte eine entsprechende Menge und räumt sie danach wieder weg. Legt benutzte Bettwäsche vor Abreise in den Wäschekorb.</p>
+
+  <h3>Endreinigung:</h3>
+  <p>Bitte hinterlasst das Haus so, wie ihr es auffinden möchtet: aufräumen, einmal durchfegen/saugen, ggf. wischen, Tisch und Flächen in der Küche abwischen, Bäder putzen etc.</p>
+
+  <p>Wer keine Lust auf Putzen hat, kann auch für 125 Euro eine Endreinigung dazu buchen. Dies setzt voraus, dass nach eurem Aufenthalt nicht am gleichen Tag die nächsten Gäste kommen und die Putzhilfe Zeit hat.</p>
+
+  <p>Darüber hinaus lassen wir das Haus ca. 3-4 mal im Jahr professionell reinigen. Bitte beachte: Da nicht alle Mieter*innen eine Endreinigung buchen und nicht alle die gleichen Putzstandards haben, können wir nicht garantieren, dass das Haus immer picobello ist. Wenn euch sehr viel Sauberkeit wichtig ist, seid ihr eventuell woanders besser aufgehoben.</p>
+</div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch('menu.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('menu-container').innerHTML = html;
+
+        // Menü-Button Eventlistener
+        const toggle = document.getElementById('menu-toggle');
+        const overlay = document.getElementById('menu-overlay');
+        const close = document.getElementById('menu-close');
+
+        toggle.addEventListener('click', () => overlay.classList.add('open'));
+        close.addEventListener('click', () => overlay.classList.remove('open'));
+      })
+      .catch(err => console.error('Fehler beim Laden des Menüs:', err));
+  });
+</script>
+
+</body>
+</html>

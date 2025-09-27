@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, nofollow">
+  <title>Ostseehaus Barendorf</title>
+  <link rel="stylesheet" href="styles copy.css" />
+</head>
+<body>
+
+<!-- Menü-Platzhalter -->
+<div id="menu-container"></div>
+
+<!-- 🎯 Startseite: Vollbild-Hintergrundbild -->
+<section class="section bg1">
+  <h1>Ostseehaus Barendorf</h1>
+</section>
+
+<!-- 🖼️ Bildreihe ab Bild 2 -->
+<section class="section bildstreifen">
+  <div class="bildreihe">
+    <img src="bilderauswahl/bild1.jpg" alt="Bild 1" />
+    <img src="bilderauswahl/bild3.jpg" alt="Bild 2" />
+    <img src="bilderauswahl/bild2.jpg" alt="Bild 3" />
+    <img src="bilderauswahl/bild4.jpg" alt="Bild 4" />
+    <img src="bilderauswahl/bild5.jpg" alt="Bild 5" />
+    <img src="bilderauswahl/bild6.jpg" alt="Bild 6" />
+    <img src="bilderauswahl/bild7.jpg" alt="Bild 7" />
+    <img src="bilderauswahl/bild8.jpg" alt="Bild 8" />
+    <img src="bilderauswahl/bild9.jpg" alt="Bild 9" />
+    <img src="bilderauswahl/bild10.jpg" alt="Bild 10" />
+    <img src="bilderauswahl/bild11.jpg" alt="Bild 11" />
+    <img src="bilderauswahl/bild11a.jpg" alt="Bild 12" />
+    <img src="bilderauswahl/bild12.jpg" alt="Bild 13" />
+    <img src="bilderauswahl/bild13.jpg" alt="Bild 14" />
+    <img src="bilderauswahl/bild14.jpg" alt="Bild 15" />
+    <img src="bilderauswahl/bild15.jpg" alt="Bild 16" />
+    <img src="bilderauswahl/bild16.jpg" alt="Bild 17" />
+    <img src="bilderauswahl/bild17.jpg" alt="Bild 18" />
+    <img src="bilderauswahl/bild18.jpg" alt="Bild 19" />
+    <img src="bilderauswahl/bild19.jpg" alt="Bild 20" />
+    <img src="bilderauswahl/bild20.jpg" alt="Bild 21" />
+    <img src="bilderauswahl/bild20a.jpg" alt="Bild 22" />
+    <img src="bilderauswahl/bild21.jpg" alt="Bild 23" />
+    <img src="bilderauswahl/bild22.jpg" alt="Bild 24" />
+    <img src="bilderauswahl/bild23.jpg" alt="Bild 25" />
+  </div>
+</section>
+
+<script>
+  // Menü per fetch laden
+  fetch('menu.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('menu-container').innerHTML = data;
+
+      // Menü-Interaktion initialisieren
+      const toggle = document.getElementById('menu-toggle');
+      const overlay = document.getElementById('menu-overlay');
+      const closeBtn = document.getElementById('menu-close');
+
+      toggle.addEventListener('click', () => overlay.classList.add('open'));
+      closeBtn.addEventListener('click', () => overlay.classList.remove('open'));
+    })
+    .catch(err => console.error("Menü konnte nicht geladen werden:", err));
+</script>
+
+</body>
+</html>

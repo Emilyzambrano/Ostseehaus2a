@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Belegte Tage (Teamup Kalender)</title>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+  <link rel="stylesheet" href="menu.css" />
+
+<style>
+
+  body {
+    font-family: "Lato", sans-serif;
+    margin: 0;
+    padding: 2em;
+    display: flex;
+    justify-content: flex-end; /* Beibehaltung: Kalender rechts */
+    align-items: flex-start;
+    background: url("bilderauswahl/kraniche.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: #2e2e2e;
+    box-sizing: border-box;
+  }
+
+/* Container allgemein größer machen */
+#calendar-container {
+    box-sizing: border-box;
+    max-width: 1000px;
+    width: calc(100% - 4em); /* nimmt Breite minus Paddings, so bleibt rechts Platz */
+    padding: 2em;
+    margin-right: 2em;      /* rechter Seitenrand */
+    margin-bottom: 2.5em;   /* Abstand nach unten, damit Text nicht überlappt */
+    background: rgba(255,255,255,0); /* aktuell durchsichtig, anpassbar */
+    border-radius: 6px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    display: block;         /* wichtig: Block, damit Höhe gerechnet wird */
+  }
+
+#calendar {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    font-size: 1.05rem;    /* Vergrößerung: wirkt sich auf viele Texte aus */
+    background: rgba(255,255,255,0); 
+    border: none;
+    padding: 0;
+  }
+
+#calendar-title {
+  font-size: 4rem; /* wie bei .section h1 */
+  font-weight: 500;
+  color: rgba(138, 111, 61);
+  font-family: "Playfair Display", serif;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.3); /* optional für bessere Lesbarkeit */
+  margin-right: 2em; /* Abstand zum Kalender */
+  margin-top: -0.25em;
+  white-space: nowrap;
+}
+
+#calendar-note {
+    display: block;
+    font-size: 1.05rem;
+    color: rgba(50,50,50,0.85);
+    margin-top: 1.2em;    /* Abstand nach dem Kalender */
+    line-height: 1.45;
+    max-width: 1000px;
+    text-align: left;
+    clear: both;
+  }
+
+#calendar-email {
+  color: #8a6f3d;          /* passend zum Titel, warme Farbe */
+  font-weight: 600;        /* leicht hervorgehoben */
+  text-decoration: underline; /* optional: unterstrichen */
+  transition: color 0.3s ease;
+}
+
+#calendar-email:hover {
+  color: #5c4824;          /* dunkler beim Hover */
+}
+
+@media (max-width: 600px) {
+  #calendar-container {
+    width: 100%;      /* Container passt sich Bildschirmbreite an */
+    padding: 1em;
+  }
+}
+
+h1 {
+  margin-right: 2em;  /* Abstand zwischen Titel und Kalender */
+  margin-left: 2em;   /* optional, Abstand zum linken Rand */
+}
+
+/* Header */
+.fc .fc-toolbar-title {
+  font-size: 1.8em;
+  font-weight: 600;
+  color: #7c6231; /* warmes, edles Braun-Gold */
+  font-family: "Playfair Display", serif;
+}
+
+.fc .fc-button {
+  background-color: #7c6231;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+.fc .fc-button:hover {
+  background-color: #5c4824;
+}
+
+/* Der Kalender gibt keine Gewähr, dass diese Zeiträume tatsächlich gebucht werden können. Bitte über die Kontaktaufnahme anfragen.
+
+/* Heute */
+.fc-day-today {
+  background-color: rgba(245, 215, 165, 0.6) !important;
+  border-radius: 8px;
+}
+
+/* Belegte Tage */
+.busy-day {
+  background-color: rgba(200, 80, 80, 0.25) !important;
+  border-radius: 8px;
+}
+
+/* Hover auf freie Tage */
+.fc-daygrid-day:hover {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Tabellenlinien dezenter */
+.fc-theme-standard td, 
+.fc-theme-standard th {
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+
+  /* Kalender-Header (Monatstitel) */
+  .fc .fc-toolbar-title {
+    font-size: 2em;
+    font-weight: 600;
+    color: #8a6f3d; /* Gold-Braun passend zum Rest */
+    font-family: "Playfair Display", serif;
+  }
+
+  /* Navigation-Buttons */
+  .fc .fc-button {
+    background-color: #8a6f3d;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  .fc .fc-button:hover {
+    background-color: #6e6544;
+  }
+
+  /* Legende unterhalb des Kalenders */
+  .calendar-legend {
+    margin-top: 1em;
+    font-size: 0.9rem;
+  }
+  .calendar-legend span {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    vertical-align: middle;
+    border-radius: 3px;
+  }
+  .legend-busy { background-color: rgba(235, 120, 120, 0.35); }
+  .legend-today { background-color: #f3e7d3; }
+  .legend-free { background-color: #fff; border: 1px solid #ccc; }
+
+@media (max-width: 600px) {
+  /* Den Body anpassen, um Scrollbalken zu vermeiden */
+  body {
+    padding: 0;
+    overflow-x: hidden; /* Verhindert horizontales Scrollen */
+  }
+
+  /* Den Titel anpassen */
+  #calendar-title {
+    font-size: 2.5rem; /* Etwas kleiner für den schmalen Bildschirm */
+    text-align: center;
+    margin: 1em 0;
+    white-space: normal;
+  }
+  
+  /* Container auf volle Breite setzen und zentrieren */
+  #calendar-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0.5em; /* Kleinerer Abstand für Mobilgeräte */
+    box-shadow: none; /* Schatten entfernen für einen saubereren Look */
+    border-radius: 0;
+  }
+
+  /* Dies ist der wichtigste Teil: Die Basis-Schriftgröße des Kalenders erhöhen */
+  #calendar {
+    font-size: 15px; /* Erhöhen Sie diesen Wert bei Bedarf weiter (z.B. auf 16px) */
+  }
+
+  /* Titel des Monats anpassen */
+  .fc .fc-toolbar-title {
+    font-size: 1.5em !important; /* Passt sich an die neue Basis-Schriftgröße an */
+  }
+
+  /* Navigations-Buttons anpassen */
+  .fc .fc-button {
+    font-size: 1em !important;
+    padding: 0.5em 0.8em !important;
+  }
+  
+  /* Text unter dem Kalender anpassen */
+  #calendar-note {
+    font-size: 1rem;
+    padding: 0 1em; /* seitlicher Abstand */
+    text-align: center;
+  }
+}
+
+</style>
+
+</head>
+<body>
+
+  <div id="menu-container"></div>
+
+  <h1 id="calendar-title">Verfügbarkeit prüfen</h1>
+  <div id="calendar-container">
+    <div id="calendar"></div>
+    <p id="calendar-note">
+      Der Kalender gibt keine Gewähr dafür, dass diese Zeiträume tatsächlich gebucht werden können. Bitte per Email anfragen: 
+      <a href="mailto:ostseehaus@posteo.de" id="calendar-email">ostseehaus@posteo.de</a>
+    </p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const calendarEl = document.getElementById('calendar');
+
+      const calendarKey = 'kst191rn45qwyb4fqd';  // Dein Teamup Kalender-Key
+      const apiKey = 'f4eda7a56be8458848d72acae9dfb79102073d0bc4662d49543058ff2528c025'; // Dein Teamup API-Token mit Lese-Rechten
+      const subcalendarIds = '14791862,14791863'; // IDs der Subkalender, die angezeigt werden sollen
+
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: 'de',
+        initialView: 'multiMonthTwo',   // neue Ansicht starten
+        firstDay: 1, // Woche beginnt mit Montag
+        timeZone: 'local',
+
+
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: ''
+        },
+
+        customButtons: {
+          next: {
+            text: 'Next',
+            click: function() {
+              const currentStart = calendar.view.currentStart;
+              const nextStart = new Date(currentStart);
+              nextStart.setMonth(nextStart.getMonth() + 1); // nur 1 Monat weiterschieben
+              calendar.gotoDate(nextStart);
+            }
+          },
+
+          prev: {
+            text: 'Prev',
+            click: function() {
+              const currentStart = calendar.view.currentStart;
+              const prevStart = new Date(currentStart);
+              prevStart.setMonth(prevStart.getMonth() - 1); // nur 1 Monat zurück
+              calendar.gotoDate(prevStart);
+            }
+          }
+        },
+
+        views: {
+        multiMonthTwo: {
+          type: 'multiMonth',
+          duration: { months: 2 }   // zwei Monate nebeneinander
+        }
+      },
+        
+        events: function(fetchInfo, successCallback, failureCallback) {
+          const startDate = fetchInfo.startStr.substring(0, 10);
+          const endDate = fetchInfo.endStr.substring(0, 10);
+
+          const url = `https://api.teamup.com/${calendarKey}/events?startDate=${startDate}&endDate=${endDate}&subcalendarIds=${subcalendarIds}`;
+
+          fetch(url, {
+            headers: {
+              'Teamup-Token': apiKey
+            }
+          })
+          .then(response => {
+            if (!response.ok) throw new Error('API Fehler: ' + response.status);
+            return response.json();
+          })
+          .then(data => {
+            console.log('API response data:', data); // Debug Ausgabe
+
+            if (!data.events) {
+              successCallback([]);
+              return;
+            }
+
+
+            const events = data.events.map(event => ({
+                start: event.start_dt,
+                end: event.end_dt,
+                allDay: event.all_day,       // wichtig bei Ganztagesevents
+                display: 'background',       // Hintergrund-Events
+                classNames: ['busy-day'],
+                title: 'Belegt'  // Falls kein Titel, "Belegt" anzeigen
+            }));
+
+            successCallback(events);
+          })
+          .catch(error => {
+            console.error('Fehler beim Laden der Termine:', error);
+            failureCallback(error);
+          });
+        }
+      });
+
+      calendar.render();
+    });
+  </script>
+
+  <script>
+  // Menü laden
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch('menu.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('menu-container').innerHTML = html;
+
+        const toggle = document.getElementById('menu-toggle');
+        const overlay = document.getElementById('menu-overlay');
+        const close = document.getElementById('menu-close');
+
+        toggle.addEventListener('click', () => overlay.classList.add('open'));
+        close.addEventListener('click', () => overlay.classList.remove('open'));
+      })
+      .catch(err => console.error('Fehler beim Laden des Menüs:', err));
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+
+<title>Preise</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="menu.css" />
+
+<style>
+  body {
+    font-family: "Lato", sans-serif;
+    margin: 0;
+    padding: 2em;
+    background: #f3e7d3;
+    color: #2e2e2e;
+  }
+
+  h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 3rem;
+    color: #8a6f3d;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+  }
+
+
+  .content {
+  max-width: 800px;   /* wie beim ersten HTML */
+  margin: 0 auto;     /* zentriert den Inhalt */
+  padding: 0 1rem;    /* optional für mobile Geräte */
+  }
+
+  .calculator {
+    background: rgba(255,255,255,0.9);
+    padding: 2rem;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  /* Bitte becahtet, dass an Ostern, Pfingsten, Himmelfahrt Weihnachten und Silvester die Preise für die Hauptsaison gelten - das kann der Rechner nicht abbilden.
+ */
+  .calculator label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+
+  .calculator input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+
+  .calculator button {
+    background-color: #8a6f3d;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .calculator button:hover {
+    background-color: #5c4824;
+  }
+
+  #price-result {
+    margin-top: 1rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+</style>
+</head>
+<body>
+
+<div id="menu-container"></div>
+
+<div class="content">
+
+    <h1>Das Vermietungskonzept und Preise</h1>
+
+    <div class="price-info">
+        <p>Wir wollen das Haus im erweiterten Freundes- und Bekanntenkreis so vermieten, dass die laufenden Kosten durch die Vermietung in etwa gedeckt sind. Das bedeutet, dass wir pro Nacht zwischen 60 und 200 Euro veranschlagen, je nachdem wann ihr das Haus mieten möchtet, mit wie vielen Personen ihr kommt und wie eure finanzielle Situation ist.</p>
+
+        <p>Richtwerte, je nach Anzahl der Personen, Dauer des Aufenthalts und finanzieller Situation.</p>
+
+        <p><strong>Hauptsaison Juli/August:</strong> Basispreis für zwei Personen 100 €/Nacht, pro weiterer Person 10 €/Nacht Aufschlag.</p>
+        <p><strong>Zwischensaison Mai/Juni/September und Ostern/Himmelfahrt/Pfingsten/Silvester:</strong> Basispreis für zwei Personen 80 €/Nacht, pro weiterer Person 10 €/Nacht Aufschlag.</p>
+        <p><strong>Nebensaison:</strong> Basispreis für zwei Personen 60 €/Nacht, pro weiterer Person 10 €/Nacht Aufschlag.</p>
+        <p>Ab sechs Nächten 20 € Rabatt pro Nacht.</p>
+
+        <p>Wenn euch diese Preise aufgrund eurer derzeitigen Einkommenssituation zu hoch sind, finden wir gemeinsam einen passenden Preis. Grundsätzlich könnt ihr das Haus auch mit wenigen Personen nutzen, z.B. alleine oder zu zweit, und dann bei Bedarf auch den Preis am unteren Rand zahlen. Allerdings würden wir für begehrte Zeiträume im Zweifel größeren Gruppen den Vorrang geben.</p>
+
+        <p>Das Gleiche gilt für kurze Aufenthalte. Außerhalb der Hauptsaison könnt ihr das Haus auch für ein Wochenende nutzen. In der Hauptsaison und an langen Wochenenden (Himmelfahrt/Pfingsten) und Silvester würden wir das Haus gerne für mindestens drei Nächte am Stück, in den Sommerferien gerne länger vermieten. Kürzere Aufenthalte sind dann eher spontan möglich, wenn das Haus kurzfristig noch frei ist.</p>
+
+        <p><strong>Helfer*innentarif:</strong> Wer Lust hat, aktiv bei der Instandhaltung und Pflege von Haus und Garten mitzuhelfen, ist dazu herzlich eingeladen und kann je nach Umfang das Haus in dem Zeitraum zu einem reduzierten Tarif nutzen (Beispiele: Schuppen reparieren, Fahrräder reparieren, Gartenarbeit etc).</p>
+
+        <p><strong>Gartengruppe:</strong> Insbesondere freuen wir uns, wenn sich ein paar Gärtner*innen finden, die Lust haben, den Naturgarten dauerhaft mitzugestalten und zu diesem Zweck regelmäßig zu kommen und kostenfrei zu übernachten. Bei Interesse gerne melden.</p>
+
+        <h2>Putzdienst buchen:</h2> 
+        <p>Wer keine Lust auf Putzen hat, kann auch eine Endreinigung für 125 Euro dazu buchen. Das setzt voraus, dass nicht am gleichen Tag die nächsten Gäste anreisen und die Putzhilfe an dem Tag Zeit hat. Bitte bei der Buchung besprechen.</p>
+
+          <!-- Zwischenüberschrift für Preisrechner -->
+        <h2>Preise prüfen</h2>   
+        <p>Gebt den gewünschten Zeitraum und die Anzahl der Personen ein, um einen Richtwert für den Mietpreis zu erhalten.</p>
+
+ <div class="calculator">
+    <label for="start-date">Startdatum (TT/MM):</label>
+    <input type="text" id="start-date" placeholder="z.B. 01/07">
+
+    <label for="end-date">Enddatum (TT/MM):</label>
+    <input type="text" id="end-date" placeholder="z.B. 10/07">
+
+    <label for="persons">Anzahl Personen:</label>
+    <input type="number" id="persons" min="1" max="10" value="1">
+
+    <button id="calculate">Preis berechnen</button>
+
+    <div id="price-result">Richtwert: –</div>
+ </div>
+
+ <p class="note">Bitte beachtet, dass an Ostern, Pfingsten, Himmelfahrt, Weihnachten und Silvester die Preise für die Hauptsaison gelten – das kann der Rechner nicht abbilden.</p>
+ 
+</div>
+
+<script>
+document.getElementById('calculate').addEventListener('click', function() {
+  const startInput = document.getElementById('start-date').value;
+  const endInput = document.getElementById('end-date').value;
+  const persons = parseInt(document.getElementById('persons').value);
+
+  if (!startInput || !endInput || !persons) {
+    alert("Bitte alle Felder ausfüllen!");
+    return;
+  }
+
+  // TT/MM → JS-Datum umwandeln (aktuelles Jahr)
+  const currentYear = new Date().getFullYear();
+  const [startDay, startMonth] = startInput.split('/').map(Number);
+  const [endDay, endMonth] = endInput.split('/').map(Number);
+
+  const startDate = new Date(currentYear, startMonth - 1, startDay);
+  const endDate = new Date(currentYear, endMonth - 1, endDay);
+
+  // Berechnung
+  function calculatePrice(startDate, endDate, persons) {
+  const oneDay = 1000 * 60 * 60 * 24;
+
+  // Dauer in Nächten korrekt berechnen
+  const duration = Math.round((endDate - startDate) / oneDay);
+
+  if (duration <= 0) return { nights: 0, total: 0, averagePerNight: 0 };
+
+  let totalPrice = 0;
+
+  for (let i = 0; i < duration; i++) {
+    const currentDate = new Date(startDate.getTime() + i * oneDay);
+    const month = currentDate.getMonth() + 1;
+
+    // 1. Basispreis für 2 Personen
+    let basePrice = 0;
+    if (month === 7 || month === 8) basePrice = 100;       // Hauptsaison
+    else if ([5,6,9].includes(month)) basePrice = 80;      // Zwischensaison
+    else basePrice = 60;                                   // Nebensaison
+
+    // 2. Aufschlag für zusätzliche Personen (ab 3. Person)
+    if (persons > 2) {
+      basePrice += (persons - 2) * 10;
+    }
+
+    // 3. Rabatt ab 6. Nacht
+    if (duration >= 6) {
+      basePrice -= 20;
+    }
+
+    totalPrice += basePrice;
+  }
+
+  return {
+    nights: duration,
+    total: totalPrice,
+    averagePerNight: totalPrice / duration
+  };
+}
+
+// Beispielaufrufe
+console.log(calculatePrice(new Date("2025-07-01"), new Date("2025-07-04"), 2)); 
+// 3 Nächte Hauptsaison, 2 Personen → 100 €/Nacht
+
+console.log(calculatePrice(new Date("2025-07-01"), new Date("2025-07-07"), 2)); 
+// 6 Nächte Hauptsaison, 2 Personen → 80 €/Nacht ab der 6.
+
+console.log(calculatePrice(new Date("2025-02-01"), new Date("2025-02-03"), 4)); 
+// 2 Nächte Nebensaison, 4 Personen → 60 + 20 = 80 €/Nacht
+
+console.log(calculatePrice(new Date("2025-05-01"), new Date("2025-05-06"), 5)); 
+// 5 Nächte Zwischensaison, 5 Personen → 80 + 30 = 110 €/Nacht (kein Rabatt, da < 6 Nächte)
+
+
+  const result = calculatePrice(startDate, endDate, persons);
+
+  document.getElementById('price-result').textContent =
+    `Richtwert: ${result.total} € (${result.averagePerNight.toFixed(0)} €/Nacht für ${result.nights} Nächte)`;
+});
+</script>
+<script>
+  // Menü laden
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch('menu.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('menu-container').innerHTML = html;
+
+        const toggle = document.getElementById('menu-toggle');
+        const overlay = document.getElementById('menu-overlay');
+        const close = document.getElementById('menu-close');
+
+        toggle.addEventListener('click', () => overlay.classList.add('open'));
+        close.addEventListener('click', () => overlay.classList.remove('open'));
+      })
+      .catch(err => console.error('Fehler beim Laden des Menüs:', err));
+  });
+</script>
+</body>
+</html>
+

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, nofollow">
+  <title>Die Umgebung</title>
+  <link rel="stylesheet" href="menu.css" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      background-color: #f3e7d3; /* helles Braun-Beige */
+      color: #000000; /* schwarze Schrift */
+      font-family: Cambria, serif;
+      font-weight: 300; /* dünne Schrift */
+      line-height: 1.6;
+    }
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 3rem;
+    color: #8a6f3d;
+    margin-bottom: 1rem;
+    }
+    h2 {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    h3 {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-top: 1.8rem;
+      margin-bottom: 0.6rem;
+    }
+    p {
+      margin-bottom: 1rem;
+    }
+    ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="menu-container"></div>
+
+  <div class="content">
+    <h1>Die Umgebung</h1>
+    <p>Das Haus befindet sich im kleinen Ostseedorf Barendorf (Ortsteil von Dassow) östlich von Travemünde. Etwa 20 Minuten fußläufig vom Haus liegt ein wunderschöner Naturstrand, mit dem Fahrrad ist man in wenigen Minuten dort und einen (kostenpflichtigen) Autoparkplatz gibt es ab Ostern bis September auch. Für Kinder ist es hier optimal, weil das Wasser mit vielen Sandbänken lange flach bleibt, Erwachsene müssen ein Stück laufen, bis sie losschwimmen können. Ein paar Strandzugänge weiter gibt es einen Bereich für Wassersport, wo man z.B. Kitesurf-Kurse machen kann (vorher online buchen). Zwei Strandabschnitte sind ausdrücklich auch für Hunde freigegeben.</p>
+
+    <p>Hinter dem Strand verläuft der Ostseewander- und Fahrradweg. Zur Priwallfähre braucht man mit dem Fahrrad 30 Minuten und kann dann in wenigen Minuten mit der Fähre nach Travemünde übersetzen. Fährt man in die andere Richtung, kommt man über Großschwansee und Brook mit ihren schönen Steilküsten nach Boltenhagen, einen größeren Ferienort. Der Strand zieht sich von Travemünde bis fast nach Boltenhagen. Einen Ausflug wert ist auch der Hof Hoher Schönberg, dort gibt es einen schönen Aussichtsturm mit Blick über die Lübecker Bucht, einen Bioladen und süße Schweine.</p>
+
+    <h2>Gastronomie:</h2>
+    <p>Im Sommer sind unten am Strand zwei Imbisswagen mit Pommes, Wurst, Crepes, Eis etc. sowie zwei Strandaufgänge weiter der Seestern-Imbiss. In Harkensee gibt es im Frühjahr/Sommer das Café Redlich mit Eis, Kuchen etc. (10 Minuten zu Fuß). Im Gutshaus Harkensee gibt es ein Restaurant (15 Minuten zu Fuß). Am Priwall gibt es einige nette Restaurants, z.B. den Dünenpavillon, ein rustikales Fischrestaurant. In Travemünde gibt es den Hafen mit Fischverkauf und zahlreichen Buden mit Pommes und Fischbrötchen, und viele Restaurants, Eiscafes etc. an der Promenade. Wer Lust auf Fahrradtouren hat, findet auch entlang des Ostseeradwegs in Richtung Boltenhagen noch nette Cafés und Restaurants.</p>
+
+    <h2>Supermärkte:</h2>
+    <p>Am Priwall gibt es einen Edeka (etwa 10 Minuten mit dem Auto, 30 Minuten mit dem Fahrrad), in Dassow gibt es Penny und Norma (10 Minuten mit dem Auto), in Schönberg Rewe, Aldi, Lidl, Rossmann etc. (20 Minuten mit dem Auto).</p>
+  </div>
+
+
+<script>
+  // Menü laden
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch('menu.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('menu-container').innerHTML = html;
+
+        const toggle = document.getElementById('menu-toggle');
+        const overlay = document.getElementById('menu-overlay');
+        const close = document.getElementById('menu-close');
+
+        toggle.addEventListener('click', () => overlay.classList.add('open'));
+        close.addEventListener('click', () => overlay.classList.remove('open'));
+      })
+      .catch(err => console.error('Fehler beim Laden des Menüs:', err));
+  });
+</script> 
+</body>
+</html>
+
