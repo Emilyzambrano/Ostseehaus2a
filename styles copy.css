@@ -191,3 +191,42 @@ html, body {
     margin: 0;          /* keine Lücke */
   }
 }
+
+/* ------------------ */
+/* 📱 Hinweis für Mobilgeräte */
+/* ------------------ */
+
+#mobile-hinweis {
+  display: none; /* Standardmäßig auf Desktops versteckt */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  z-index: 2000; /* Stellt sicher, dass es über allem liegt */
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  align-items: center;
+  gap: 20px; /* Abstand zwischen Text und Schließen-Button */
+}
+
+#hinweis-schliessen {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+/* Media Query, um den Hinweis nur auf Handys anzuzeigen */
+@media (max-width: 768px) {
+  #mobile-hinweis {
+    display: flex; /* Auf Bildschirmen unter 768px Breite sichtbar machen */
+  }
+}
