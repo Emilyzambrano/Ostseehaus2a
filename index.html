@@ -7,6 +7,13 @@
   <link rel="stylesheet" href="styles copy.css" />
 </head>
 <body>
+  
+  <div id="mobile-hinweis">
+    <p>Für eine bessere Ansicht bitte auf dem Laptop öffnen.</p>
+    <button id="hinweis-schliessen" title="Schließen">&times;</button>
+  </div>
+
+  <div id="menu-container"></div>
 
 <!-- Menü-Platzhalter -->
 <div id="menu-container"></div>
@@ -65,5 +72,17 @@
     .catch(err => console.error("Menü konnte nicht geladen werden:", err));
 </script>
 
+<script>
+  // Skript für den mobilen Hinweis
+  const hinweisBox = document.getElementById('mobile-hinweis');
+  const schliessenButton = document.getElementById('hinweis-schliessen');
+
+  if (hinweisBox && schliessenButton) {
+    schliessenButton.addEventListener('click', function() {
+      hinweisBox.style.display = 'none';
+    });
+  }
+</script>
+  
 </body>
 </html>
