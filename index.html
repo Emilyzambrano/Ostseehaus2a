@@ -8,10 +8,12 @@
 </head>
 <body>
   
-  <div id="mobile-hinweis">
+  <div id="mobile-hinweis" style="display:none;">
     <p>Für eine bessere Ansicht bitte auf dem Laptop öffnen.</p>
     <button id="hinweis-schliessen" title="Schließen">&times;</button>
   </div>
+
+  <div id="menu-container"></div>
 
   <div id="menu-container"></div>
 
@@ -72,17 +74,24 @@
     .catch(err => console.error("Menü konnte nicht geladen werden:", err));
 </script>
 
-<script>
-  // Skript für den mobilen Hinweis
-  const hinweisBox = document.getElementById('mobile-hinweis');
-  const schliessenButton = document.getElementById('hinweis-schliessen');
+  <!-- Dein JavaScript -->
+  <script>
+    const hinweisBox = document.getElementById('mobile-hinweis');
+    const schliessenButton = document.getElementById('hinweis-schliessen');
 
-  if (hinweisBox && schliessenButton) {
-    schliessenButton.addEventListener('click', function() {
-      hinweisBox.style.display = 'none';
-    });
-  }
-</script>
+    // Geräteerkennung (einfache Variante)
+    const istMobil = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (istMobil && hinweisBox) {
+      hinweisBox.style.display = "flex"; // Nur auf echten Mobilgeräten anzeigen
+    }
+
+    if (hinweisBox && schliessenButton) {
+      schliessenButton.addEventListener('click', () => {
+        hinweisBox.style.display = 'none';
+      });
+    }
+  </script>
   
 </body>
 </html>
