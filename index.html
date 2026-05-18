@@ -1,97 +1,1249 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="robots" content="noindex, nofollow">
-  <title>Ostseehaus Barendorf</title>
-  <link rel="stylesheet" href="styles copy.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Ostseehaus Barendorf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/locales/de.global.min.js"></script>
+<style>
+  /* ── CSS VARIABLES ── */
+  :root {
+    --sand:    #f0e4ce;
+    --sand2:   #e8d5b0;
+    --warm:    #d4b483;
+    --gold:    #9a7540;
+    --dark:    #2a1f0e;
+    --sea:     #3e6b7c;
+    --sea2:    #2a4f5e;
+    --foam:    #c8dde5;
+    --text:    #2e2012;
+    --muted:   #7a6545;
+    --white:   #fffdf8;
+    --r: 0.5rem;
+  }
+ 
+  /* ── RESET & BASE ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--sand);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+ 
+  /* ── FULLCALENDAR CUSTOM STYLING ── */
+  .fc .fc-toolbar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 600; color: var(--gold);
+  }
+  .fc .fc-button {
+    background-color: var(--gold); border: none;
+    border-radius: 4px; color: #fff; font-weight: 500;
+    font-family: 'Jost', sans-serif; font-size: 0.8rem;
+    transition: background-color 0.2s;
+  }
+  .fc .fc-button:hover, .fc .fc-button:not(:disabled):active { background-color: var(--sea2); }
+  .fc .fc-button-primary:not(:disabled).fc-button-active { background-color: var(--sea2); }
+  .fc-day-today { background-color: rgba(200, 221, 229, 0.4) !important; }
+  .fc-theme-standard td, .fc-theme-standard th { border-color: rgba(0,0,0,0.07); }
+  .fc .fc-daygrid-day-number { color: var(--text); font-size: 0.85rem; }
+  .busy-day { background-color: rgba(200, 80, 80, 0.22) !important; }
+  .fc .fc-multimonth-title { font-family: 'Cormorant Garamond', serif; color: var(--gold); }
+ 
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+ 
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(240,228,206,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(154,117,64,0.2);
+    transition: background 0.3s;
+  }
+  nav.scrolled { background: rgba(240,228,206,0.97); }
+ 
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-weight: 600; letter-spacing: 0.04em;
+    color: var(--gold); text-decoration: none;
+    cursor: pointer;
+  }
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 1px; background: var(--gold);
+    transform: scaleX(0); transform-origin: right;
+    transition: transform 0.3s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+  .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); transform-origin: left; }
+ 
+  /* Hamburger */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; background: none; border: none; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 1.5px; background: var(--gold);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+ 
+  /* Mobile overlay */
+  .mobile-menu {
+    position: fixed; inset: 0; z-index: 99;
+    background: var(--sand);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2.5rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .mobile-menu.open { opacity: 1; pointer-events: all; }
+  .mobile-menu a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem; font-weight: 300; color: var(--gold);
+    text-decoration: none; cursor: pointer;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--dark); }
+ 
+  /* ── PAGES (SPA) ── */
+  .page { display: none; min-height: 100vh; padding-top: 4.5rem; position: relative; z-index: 1; }
+  .page.active { display: block; }
+ 
+  /* ── HERO ── */
+  .hero {
+    position: relative; height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    overflow: hidden; padding-top: 0;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(20,30,35,0.35) 0%, rgba(20,30,35,0.08) 40%, rgba(20,30,35,0.55) 100%),
+      url('fotos/meer.jpg') center center / cover no-repeat;  
+  }
+  /* Animated waves */
+  .wave-layer {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 220px;
+  }
+  .wave-svg { width: 200%; animation: waveScroll 8s linear infinite; }
+  .wave-svg2 { width: 200%; animation: waveScroll 11s linear infinite reverse; opacity: 0.5; }
+  @keyframes waveScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+ 
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center; color: var(--white);
+    animation: fadeUp 1s ease both;
+  }
+  .hero-eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--foam); margin-bottom: 1.5rem;
+    animation: fadeUp 1s 0.1s ease both;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300; line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+  .hero-subtitle {
+    font-size: 1.05rem; font-weight: 300;
+    color: var(--foam); margin-top: 1.2rem;
+    animation: fadeUp 1s 0.35s ease both;
+  }
+  .hero-cta {
+    margin-top: 3rem;
+    animation: fadeUp 1s 0.5s ease both;
+  }
+  .btn {
+    display: inline-block; padding: 0.85rem 2.5rem;
+    border: 1px solid rgba(255,255,255,0.6);
+    color: var(--white); font-size: 0.82rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    cursor: pointer; background: none;
+    transition: background 0.3s, border-color 0.3s, color 0.3s;
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .btn:hover { background: rgba(255,255,255,0.15); border-color: white; }
+  .btn-gold {
+    border-color: var(--gold); color: var(--gold);
+    background: none;
+  }
+  .btn-gold:hover { background: var(--gold); color: white; }
+  .btn-solid {
+    background: var(--gold); border-color: var(--gold); color: white;
+  }
+  .btn-solid:hover { background: var(--sea2); border-color: var(--sea2); }
+ 
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    z-index: 2; color: var(--foam); font-size: 0.7rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    animation: pulse 2.5s ease infinite;
+  }
+  .scroll-arrow {
+    width: 1px; height: 40px; background: var(--foam);
+    animation: scrollDrop 2.5s ease infinite;
+  }
+  @keyframes scrollDrop {
+    0%, 100% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform-origin: bottom; }
+  }
+  @keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
+ 
+  /* ── GALLERY STRIP ── */
+  .gallery-section {
+    padding: 5rem 0 3rem;
+    background: var(--sand);
+  }
+  .section-header {
+    text-align: center; padding: 0 2rem; margin-bottom: 3rem;
+  }
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 400; color: var(--dark);
+    line-height: 1.2;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+ 
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 260px 200px;
+    gap: 6px;
+    padding: 0 2rem;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .gallery-item {
+    overflow: hidden; position: relative; cursor: pointer;
+  }
+  .gallery-item:first-child { grid-row: 1 / 3; }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s ease;
+    display: block;
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+ 
+  /* Placeholder gradient images */
+  .ph { width: 100%; height: 100%; }
+  .ph-sea { background: linear-gradient(135deg, #3e6b7c, #2a4f5e, #1b3545); }
+  .ph-house { background: linear-gradient(135deg, #c8a46a, #a07840, #7a5e30); }
+  .ph-garden { background: linear-gradient(135deg, #5a8a5c, #3d6640, #2a4a2c); }
+  .ph-beach { background: linear-gradient(135deg, #d4b483, #b89060, #9a7540); }
+  .ph-interior { background: linear-gradient(135deg, #c0a87a, #a08858, #7a6840); }
+  .ph-terrace { background: linear-gradient(135deg, #8fb8c4, #6a9aaa, #4a7a8a); }
+ 
+  .gallery-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem; letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+    font-style: italic;
+  }
+ 
+  /* ── CONTENT PAGES ── */
+  .content-wrap {
+    max-width: 820px; margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+  }
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 300; color: var(--gold);
+    margin-bottom: 0.5rem; line-height: 1.1;
+  }
+  .page-subtitle {
+    font-size: 1.05rem; font-weight: 300; color: var(--muted);
+    margin-bottom: 3rem; padding-bottom: 2rem;
+    border-bottom: 1px solid var(--sand2);
+  }
+  h2.subhead {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 600;
+    color: var(--dark); margin: 2.5rem 0 0.8rem;
+  }
+  h3.item-title {
+    font-size: 0.85rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--sea); margin: 2rem 0 0.5rem;
+  }
+  p.body-text {
+    font-size: 1rem; line-height: 1.8; color: var(--text);
+    margin-bottom: 1.2rem; font-weight: 300;
+  }
+  ul.styled {
+    padding-left: 0; list-style: none; margin-bottom: 1.2rem;
+  }
+  ul.styled li {
+    padding: 0.35rem 0 0.35rem 1.5rem;
+    position: relative; font-size: 0.96rem;
+    font-weight: 300; color: var(--text); line-height: 1.7;
+  }
+  ul.styled li::before {
+    content: '–'; position: absolute; left: 0; color: var(--warm);
+  }
+ 
+  /* ── FEATURE CARDS ── */
+  /* ── Bento-Style Quick Facts ── */
+.bento-facts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.bento-fact-card {
+  background: #fbf9f6; /* Ganz sanfter, edler Natur/Sandton */
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  padding: 30px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 120px;
+}
+.bento-fact-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #777;
+}
+.bento-fact-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: #222;
+  line-height: 1.1;
+  margin-top: 15px;
+}
+.bento-fact-sub {
+  font-size: 1.1rem;
+  color: #888;
+}
+
+@media (max-width: 768px) {
+  .bento-facts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}
+@media (max-width: 480px) {
+  .bento-facts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+ 
+  /* ── PRICE CALCULATOR ── */
+  .calc-box {
+    background: var(--white);
+    border: 1px solid var(--sand2);
+    padding: 2.5rem; margin: 2rem 0;
+    position: relative; overflow: hidden;
+  }
+  .calc-box::after {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(180deg, var(--warm), var(--sea));
+  }
+  .calc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 600; color: var(--dark);
+    margin-bottom: 1.5rem;
+  }
+  .calc-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 1rem; align-items: end; margin-bottom: 1rem;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-label {
+    font-size: 0.72rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted);
+    font-weight: 500;
+  }
+  .form-input {
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--sand2);
+    background: var(--sand);
+    color: var(--text); font-size: 0.95rem;
+    font-family: 'Jost', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    width: 100%;
+  }
+  .form-input:focus { border-color: var(--gold); background: var(--white); }
+  .calc-result {
+    background: linear-gradient(135deg, var(--sea2), var(--sea));
+    color: white; padding: 1.5rem 2rem;
+    display: none;
+    margin-top: 1rem;
+  }
+  .calc-result.visible { display: block; }
+  .result-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 300;
+    line-height: 1;
+  }
+  .result-detail {
+    font-size: 0.85rem; color: var(--foam); margin-top: 0.5rem;
+  }
+  .calc-note {
+    font-size: 0.82rem; color: var(--muted);
+    margin-top: 1rem; font-style: italic;
+  }
+ 
+  /* Price table */
+  .price-table {
+    width: 100%; border-collapse: collapse; margin: 2rem 0;
+    font-size: 0.95rem;
+  }
+  .price-table th {
+    background: var(--dark); color: var(--sand);
+    padding: 0.9rem 1.2rem; text-align: left;
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 500;
+  }
+  .price-table td {
+    padding: 0.9rem 1.2rem; border-bottom: 1px solid var(--sand2);
+    font-weight: 300;
+  }
+  .price-table tr:hover td { background: var(--white); }
+  .price-table .price-col {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600; color: var(--gold);
+  }
+ 
+  /* ── ORT MAP EMBED ── */
+  .map-embed {
+    width: 100%; height: 350px;
+    border: none; margin: 2rem 0;
+    filter: sepia(20%) saturate(90%);
+  }
+ 
+  /* ── VERFÜGBARKEIT ── */
+  .avail-note {
+    background: var(--foam);
+    padding: 2rem; margin: 2rem 0;
+    border-left: 4px solid var(--sea);
+    font-size: 0.95rem; font-weight: 300; line-height: 1.8;
+  }
+  .contact-block {
+    background: var(--dark); color: var(--sand);
+    padding: 3rem; text-align: center; margin: 2rem 0;
+  }
+  .contact-block h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 300; margin-bottom: 0.8rem;
+    color: var(--warm);
+  }
+  .contact-block p { font-weight: 300; color: var(--sand2); margin-bottom: 1.5rem; }
+ 
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark); color: var(--sand2);
+    padding: 3rem 2rem 2rem;
+    text-align: center; position: relative; z-index: 1;
+  }
+  footer .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem; font-weight: 300; color: var(--warm);
+    margin-bottom: 1rem; display: block;
+  }
+  footer p { font-size: 0.82rem; font-weight: 300; opacity: 0.7; }
+ 
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+ 
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      padding: 0 1rem;
+    }
+    .gallery-item:first-child { grid-row: auto; }
+ 
+    .calc-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .calc-grid > *:nth-child(3) { grid-column: 1; }
+    .calc-grid > *:nth-child(4) { grid-column: 2; }
+ 
+    .content-wrap { padding: 2rem 1.5rem 4rem; }
+  }
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+    .calc-grid { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
-  
-  <div id="mobile-hinweis" style="display:none;">
-    <p>Für eine bessere Ansicht bitte auf dem Laptop öffnen.</p>
-    <button id="hinweis-schliessen" title="Schließen">&times;</button>
+ 
+<!-- ── NAVIGATION ── -->
+<nav id="navbar">
+  <span class="nav-logo" onclick="showPage('home')">Ostseehaus Barendorf</span>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" data-page="home">Startseite</a></li>
+    <li><a onclick="showPage('haus')" data-page="haus">Das Haus</a></li>
+    <li><a onclick="showPage('ort')" data-page="ort">Die Umgebung</a></li>
+    <li><a onclick="showPage('preise')" data-page="preise">Preise</a></li>
+    <li><a onclick="showPage('verfuegbar')" data-page="verfuegbar">Verfügbarkeit</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+ 
+<!-- ── MOBILE MENU ── -->
+<div class="mobile-menu" id="mobileMenu">
+  <a onclick="showPage('home'); closeMobile()">Startseite</a>
+  <a onclick="showPage('haus'); closeMobile()">Das Haus</a>
+  <a onclick="showPage('ort'); closeMobile()">Die Umgebung</a>
+  <a onclick="showPage('preise'); closeMobile()">Preise</a>
+  <a onclick="showPage('verfuegbar'); closeMobile()">Verfügbarkeit</a>
+</div>
+ 
+<!-- ════════════════════════════════ -->
+<!-- PAGE: HOME                       -->
+<!-- ════════════════════════════════ -->
+<div id="page-home" class="page active">
+ 
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+ 
+    <!-- Decorative wave -->
+    <div class="wave-layer">
+      <svg class="wave-svg" viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;height:120px">
+        <path fill="rgba(240,228,206,0.15)" d="M0,60 C360,120 720,0 1080,60 C1260,90 1350,30 1440,60 L1440,120 L0,120Z"/>
+      </svg>
+    </div>
+    <div class="wave-layer" style="bottom:20px;height:180px">
+      <svg class="wave-svg2" viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;height:100px">
+        <path fill="rgba(240,228,206,0.08)" d="M0,50 C200,100 500,0 800,50 C1000,80 1200,20 1440,50 L1440,100 L0,100Z"/>
+      </svg>
+    </div>
+ 
+    <div class="hero-content">
+      <p class="hero-eyebrow">Ostseeküste · Barendorf · Mecklenburg-Vorpommern</p>
+      <h1 class="hero-title">Ostseehaus<br><em style="font-style:italic;font-weight:300">Barendorf</em></h1>
+      <p class="hero-subtitle">Wunderschönes Ferienhaus mit Garten &amp; Weitblick · bis zu 12 Personen · Naturstrand fußläufig</p>
+      <div class="hero-cta">
+        <button class="btn" onclick="showPage('haus')">Das Haus entdecken</button>
+        &nbsp;&nbsp;
+        <button class="btn" onclick="showPage('preise')">Preise &amp; Rechner</button>
+      </div>
+    </div>
+  </section>
+
+
+ 
+<section class="gallery-section">
+  <div class="section-header">
+    <p class="section-label">Überblick</p>
+    <h2 class="section-title">Ein paar Eindrücke...</h2>
   </div>
 
-  <div id="menu-container"></div>
+  <div class="gallery-grid">
+    <div class="gallery-item" onclick="showPage('haus')" style="cursor:pointer">
+      <img src="fotos/haus.jpg" alt="Haus Außenansicht" loading="lazy" />      
+    </div>
+    <div class="gallery-item">
+      <img src="fotos/strand.jpg" alt="Ostsee Strand Barendorf" loading="lazy" />      
+    </div>
+    <div class="gallery-item">
+      <img src="fotos/bild20a.jpg" alt="Der naturnahe Garten" loading="lazy" />
+    </div>
+    <div class="gallery-item">
+      <img src="fotos/bild18.jpg" alt="Terrasse" loading="lazy" />
+    </div> 
+    <div class="gallery-item">
+      <img src="fotos/bild16.jpg" alt="Gartenansicht" loading="lazy" />
+    </div>
+  </div>
 
-  <div id="menu-container"></div>
-
-<!-- Menü-Platzhalter -->
-<div id="menu-container"></div>
-
-<!-- 🎯 Startseite: Vollbild-Hintergrundbild -->
-<section class="section bg1">
-  <h1>Ostseehaus Barendorf</h1>
+  <p style="text-align:center; margin-top:2rem">
+    <button class="btn btn-gold" onclick="showPage('haus')">Alle Details zum Haus →</button>
+  </p>
 </section>
 
-<!-- 🖼️ Bildreihe ab Bild 2 -->
-<section class="section bildstreifen">
-  <div class="bildreihe">
-    <img src="bilderauswahl/bild1.jpg" alt="Bild 1" />
-    <img src="bilderauswahl/bild3.jpg" alt="Bild 2" />
-    <img src="bilderauswahl/bild2.jpg" alt="Bild 3" />
-    <img src="bilderauswahl/bild4.jpg" alt="Bild 4" />
-    <img src="bilderauswahl/bild5.jpg" alt="Bild 5" />
-    <img src="bilderauswahl/bild6.jpg" alt="Bild 6" />
-    <img src="bilderauswahl/bild7.jpg" alt="Bild 7" />
-    <img src="bilderauswahl/bild8.jpg" alt="Bild 8" />
-    <img src="bilderauswahl/bild9.jpg" alt="Bild 9" />
-    <img src="bilderauswahl/bild10.jpg" alt="Bild 10" />
-    <img src="bilderauswahl/bild11.jpg" alt="Bild 11" />
-    <img src="bilderauswahl/bild11a.jpg" alt="Bild 12" />
-    <img src="bilderauswahl/bild12.jpg" alt="Bild 13" />
-    <img src="bilderauswahl/bild13.jpg" alt="Bild 14" />
-    <img src="bilderauswahl/bild14.jpg" alt="Bild 15" />
-    <img src="bilderauswahl/bild15.jpg" alt="Bild 16" />
-    <img src="bilderauswahl/bild16.jpg" alt="Bild 17" />
-    <img src="bilderauswahl/bild17.jpg" alt="Bild 18" />
-    <img src="bilderauswahl/bild18.jpg" alt="Bild 19" />
-    <img src="bilderauswahl/bild19.jpg" alt="Bild 20" />
-    <img src="bilderauswahl/bild20.jpg" alt="Bild 21" />
-    <img src="bilderauswahl/bild20a.jpg" alt="Bild 22" />
-    <img src="bilderauswahl/bild21.jpg" alt="Bild 23" />
-    <img src="bilderauswahl/bild22.jpg" alt="Bild 24" />
-    <img src="bilderauswahl/bild23.jpg" alt="Bild 25" />
+<section style="padding: 5rem 2rem; background: var(--white); position: relative; z-index: 1;">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <div class="section-header" style="margin-bottom: 3rem;">
+      <p class="section-label">Das Wichtigste</p>
+      <h2 class="section-title">Auf einen <em>Blick</em></h2>
+    </div>
+    
+    <div class="bento-facts-grid">
+      <div class="bento-fact-card fade-in">
+        <span class="bento-fact-label">Wohnfläche</span>
+        <div class="bento-fact-value">155 m²</div>
+      </div>
+      <div class="bento-fact-card fade-in">
+        <span class="bento-fact-label">Schlafzimmer</span>
+        <div class="bento-fact-value">3 <span class="bento-fact-sub">+2 Dachbodenzimmer</span></div>
+      </div>
+      <div class="bento-fact-card fade-in">
+        <span class="bento-fact-label">Personen</span>
+        <div class="bento-fact-value">bis zu 12</div>
+      </div>
+      <div class="bento-fact-card fade-in">
+        <span class="bento-fact-label">Lage</span>
+        <div class="bento-fact-value">Strandnah</div>
+      </div>
+      <div class="bento-fact-card fade-in">
+        <span class="bento-fact-label">Wellness & Extras</span>
+        <div class="bento-fact-value" style="font-size: 1.5rem; margin-top: 5px;">Sauna, (und bald) Grill & Kamin</div>
+      </div>
+      <div class="bento-fact-card fade-in">
+        <span class="bento-fact-label">Fahrräder</span>
+        <div class="bento-fact-value">~8 inklusive</div>
+      </div>
+    </div>
   </div>
 </section>
+ 
+  <!-- CTA strip -->
+  <section style="background:var(--sea2);padding:5rem 2rem;text-align:center;position:relative;z-index:1">
+    <p style="font-size:0.75rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--foam);margin-bottom:1rem">Bock auf Urlaub?</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;color:white;margin-bottom:2rem">Jetzt verfügbare Termine prüfen</h2>
+    <button class="btn" onclick="showPage('verfuegbar')">Verfügbarkeit &amp; Kontakt</button>
+  </section>
+ 
+  <footer>
+    <span class="footer-logo">Ostseehaus Barendorf</span>
+    <p>Barendorf · Ortsteil von Dassow · Mecklenburg-Vorpommern</p>
+  </footer>
+</div>
+ 
+<!-- ════════════════════════════════ -->
+<!-- PAGE: HAUS                       -->
+<!-- ════════════════════════════════ -->
+<div id="page-haus" class="page">
+  <div class="content-wrap">
+    <h1 class="page-title">Das Haus</h1>
+    <p class="page-subtitle">Wunderschönes Ferienhaus mit Garten und Weitblick für bis zu 12 Personen, Naturstrand fußläufig erreichbar.</p>
+ 
+    <div style="width:100%;height:420px;overflow:hidden;margin-bottom:2.5rem;margin-top:-1rem">
+      <img src="fotos/bild2.jpg" alt="Außenansicht"
+           style="width:100%;height:100%;object-fit:cover" />
+    </div>
 
+    <div class="bento-facts-grid" style="margin: 2rem 0;">
+  <div class="bento-fact-card">
+    <span class="bento-fact-label">Wohnfläche</span>
+    <div class="bento-fact-value">155 m²</div>
+  </div>
+  <div class="bento-fact-card">
+    <span class="bento-fact-label">Schlafzimmer</span>
+    <div class="bento-fact-value">3 <span class="bento-fact-sub">+2 Dachbodenzimmer</span></div>
+  </div>
+  <div class="bento-fact-card">
+    <span class="bento-fact-label">Badezimmer</span>
+    <div class="bento-fact-value">2 <span class="bento-fact-sub">(Sauna)</span></div>
+  </div>
+  <div class="bento-fact-card">
+    <span class="bento-fact-label">Terrasse</span>
+    <div class="bento-fact-value" style="font-size: 1.7rem; margin-top: 20px;">Südausrichtung</div>
+  </div>
+</div>
+ 
+    <p class="body-text">Das Haus hat insgesamt 155 m² Wohnfläche. Unten befindet sich ein geräumiger Wohn-, Ess- und Kochbereich. Am großen Esstisch finden 8–10 Personen Platz. An den Wohnbereich grenzt eine große Terrasse mit Ausrichtung nach Süden.</p>
+    <p class="body-text">Im Obergeschoss sind drei Schlafzimmer, unter dem Dach zwei weitere Räume. Das Haus hat zwei Badezimmer, eins mit Dusche, Badewanne und Toilette, eins mit Dusche und Toilette. An das Badezimmer im Obergeschoss ist eine Sauna angeschlossen.</p>
+    <p class="body-text">Das Haus ist von einem herrlichen, naturnahen Garten umgeben. Besonders schön ist der weite Blick über die Felder, auf denen sich oft Kraniche und saisonal Wildgänse niederlassen.</p>
+ 
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:2rem 0">
+      <img src="fotos/bild3.jpg" alt="Wohnzimmer"
+            style="width:100%;height:260px;object-fit:cover" />
+      <img src="fotos/bild4.jpg" alt="Esstisch"
+            style="width:100%;height:260px;object-fit:cover" />
+    </div>
+
+    <h2 class="subhead">Schlafzimmer</h2>
+ 
+    <h3 class="item-title">Schlafzimmer 1</h3>
+    <p class="body-text">Doppelbett mit einer 160 cm breiten Matratze.</p>
+ 
+    <h3 class="item-title">Schlafzimmer 2</h3>
+    <p class="body-text">Doppelbett mit zwei getrennten Matratzen (je 80 cm, insgesamt 160 cm breit).</p>
+ 
+    <h3 class="item-title">Schlafzimmer 3</h3>
+    <p class="body-text">Zwei Einzelbetten (80 cm), unter denen jeweils ein weiteres Bett steht. Bei Bedarf verfügt das Zimmer also über vier Einzelbetten, zwei davon sind allerdings mit dünneren Matratzen ausgestattet und eher für Kinder geeignet.</p>
+ 
+    <h3 class="item-title">Dachboden</h3>
+    <p class="body-text">Vom Flur gelangt man auf den Dachboden, wo zwei weitere Räume als zusätzliche Schlafzimmer genutzt werden können. <strong>Bitte beachten,</strong> dass die Treppe für kleine Kinder oder ältere Menschen nicht geeignet ist.</p>
+ 
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:1.5rem 0 2rem">
+      <img src="fotos/bild7.jpg" alt="Schlafzimmer 1"
+         style="width:100%;height:200px;object-fit:cover" />
+      <img src="fotos/bild6.jpg" alt="Schlafzimmer 2"
+         style="width:100%;height:200px;object-fit:cover" />
+      <img src="fotos/bild8.jpg" alt="Schlafzimmer 3"
+          style="width:100%;height:200px;object-fit:cover" />
+
+      <img src="fotos/bild11a.jpg" alt="Schlafzimmer 1"
+         style="width:100%;height:200px;object-fit:cover" />
+      <img src="fotos/bild12.jpg" alt="Schlafzimmer 2"
+         style="width:100%;height:200px;object-fit:cover" />
+      <img src="fotos/bild13.jpg" alt="Schlafzimmer 3"
+          style="width:100%;height:200px;object-fit:cover" />
+    </div>
+
+    <h2 class="subhead">Ausstattung</h2>
+ 
+    <h3 class="item-title">Küche</h3>
+    <p class="body-text">Großer Kühl- und Gefrierschrank, Wasserkocher, Toaster, Handmixer, Pürierstab, Geschirr für ca. 12 Personen, viele Gläser, Salatschleuder, Backform, Auflaufform, Teekanne, kleine Moccakanne u.v.m.</p>
+    <p class="body-text" style="font-size:0.9rem;color:var(--muted)"><em>In einigen Schubladen sind unverderbliche Lebensmittel der Familie gelagert, falls ihr sie aufbraucht, bitte nachkaufen oder Bescheid geben.</em></p>
+ 
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:1.5rem 0 2rem">
+      <img src="fotos/bild5.jpg" alt="Küche"
+          style="width:100%;height:200px;object-fit:cover" />
+    </div>
+
+    <h3 class="item-title">Wohnen &amp; Technik</h3>
+    <ul class="styled">
+      <li>Glasfaserinternet mit WLAN-Router</li>
+      <li>Fernseher mit Satellitenfernsehen und Amazon Firestick</li>
+      <li>Bose Soundbar im Wohnzimmer</li>
+      <li>Sauna im oberen Badezimmer</li>
+    </ul>
+ 
+    <h3 class="item-title">Schuppen &amp; Garten</h3>
+    <ul class="styled">
+      <li>Ca. 8 Fahrräder (Pumpe &amp; Flickzeug vorhanden)</li>
+      <li>Stand-Up-Paddleboard</li>
+      <li>Zwei Tische auf der Terrasse + Klappstühle &amp; Liegen</li>
+      <li>Kleiner Grill und Feuerstelle im Garten</li>
+    </ul>
+
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;margin:1.5rem 0">
+      <img src="fotos/bild15.jpg" alt="Terrasse Süd"
+          style="width:100%;height:280px;object-fit:cover" />
+      <img src="fotos/bild14.jpg" alt="Garten"
+          style="width:100%;height:280px;object-fit:cover" />
+      <img src="fotos/bild20a.jpg" alt="Garten"
+          style="width:100%;height:280px;object-fit:cover" />
+    </div>
+ 
+    <h2 class="subhead">Bettwäsche &amp; Handtücher</h2>
+    <p class="body-text">Bettwäsche und Handtücher bitte nach Möglichkeit mitbringen. Wenn ihr Bettwäsche oder Handtücher aus dem Wäscheschrank nutzt, wascht und trocknet bitte eine entsprechende Menge und räumt sie danach wieder weg. Legt benutzte Bettwäsche vor Abreise in den Wäschekorb.</p>
+ 
+    <h2 class="subhead">Endreinigung</h2>
+    <p class="body-text">Bitte hinterlasst das Haus so, wie ihr es auffinden möchtet: aufräumen, einmal durchfegen/saugen, ggf. wischen, Tisch und Flächen in der Küche abwischen, Bäder putzen, etc.</p>
+    <p class="body-text">Wer keine Lust auf Putzen hat kann auch für 125 Euro eine Endreinigung dazu buchen. Dies setzt voraus, dass nach eurem Aufenthalt nicht am gleichen Tag die nächsten Gäste kommen und die Putzhilfe Zeit hat. Bitte bei der Buchung absprechen.</p>
+    <p class="body-text" style="font-size:0.88rem;color:var(--muted)"><em>Das Haus wird ca. 3–4× im Jahr professionell gereinigt. Da nicht alle Gäste einen Putzservice buchen und nicht alle die gleichen Putzstandards haben, können wir nicht garantieren, dass das Haus immer picobello ist. Wenn euch sehr viel Sauberkeit wichtig ist, seid ihr eventuell woanders besser aufgehoben.</em></p>
+  </div>
+  <footer>
+    <span class="footer-logo">Ostseehaus Barendorf</span>
+    <p>Barendorf · Ortsteil von Dassow · Mecklenburg-Vorpommern</p>
+  </footer>
+</div>
+ 
+<!-- ════════════════════════════════ -->
+<!-- PAGE: ORT                        -->
+<!-- ════════════════════════════════ -->
+<div id="page-ort" class="page">
+  <div class="content-wrap">
+    <h1 class="page-title">Die Umgebung</h1>
+    <p class="page-subtitle">Barendorf liegt östlich von Travemünde zwischen Natur, Meer und schönen Dörfern.</p>
+ 
+    <div style="width:100%;height:380px;overflow:hidden;margin-bottom:2.5rem;border-left:4px solid var(--sea)">
+      <img src="fotos/ostsee.jpg" alt="Naturstrand Barendorf"
+          style="width:100%;height:100%;object-fit:cover;object-position:center 70%" />
+    </div>
+
+    <p class="body-text">Das Haus befindet sich im kleinen Ostseedorf Barendorf (Ortsteil von Dassow) östlich von Travemünde. Etwa 20 Minuten fußläufig vom Haus liegt ein wunderschöner Naturstrand, mit dem Fahrrad ist man in wenigen Minuten dort und einen (kostenpflichtigen) Autoparkplatz gibt es ab Ostern bis September auch.</p>
+    <p class="body-text">Das Wasser bleibt mit vielen Sandbänken lange flach, ist also perfekt für Kinder. Erwachsene müssen ein Stück laufen, bis sie losschwimmen können. Ein paar Strandzugänge weiter gibt es einen Bereich für Wassersport, wo man z.B. Kitesurf-Kurse machen kann (vorher online buchen). Zwei Strandabschnitte sind ausdrücklich auch für Hunde freigegeben.</p>
+ 
+    <h2 class="subhead">Ausflüge &amp; Radtouren</h2>
+    <p class="body-text">Hinter dem Strand verläuft der Ostseewander- und Fahrradweg. Zur Priwallfähre braucht man mit dem Fahrrad 30 Minuten und kann dann in wenigen Minuten mit der Fähre nach Travemünde übersetzen. Fährt man in die andere Richtung, kommt man über Großschwansee und Brook mit ihren schönen Steilküsten nach Boltenhagen, einen größeren Ferienort. Der Strand zieht sich von Travemünde bis fast nach Boltenhagen.</p>
+    <p class="body-text">Ein Ausflug zum <strong>Hof Hoher Schönberg</strong> lohnt sich auch. Dort gibt es einen schönen Aussichtsturm mit Blick über die Lübecker Bucht, einen Bioladen und süße Schweine.</p>
+ 
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:2rem 0">
+      <img src="fotos/kraniche.jpg" alt="Kraniche auf dem Feld"
+          style="width:100%;height:240px;object-fit:cover" />
+    </div>
+
+    <!-- Google Maps embed (OpenStreetMap as fallback, no API key needed) -->
+    <iframe
+      class="map-embed"
+      src="https://www.openstreetmap.org/export/embed.html?bbox=10.8,53.88,11.0,53.98&layer=mapnik&marker=53.93,10.92"
+      allowfullscreen
+      loading="lazy"
+      title="Lage Barendorf"
+    ></iframe>
+    <p style="font-size:0.78rem;color:var(--muted);margin-top:-1rem;margin-bottom:2rem">📍 Barendorf, Ortsteil von Dassow, Mecklenburg-Vorpommern</p>
+ 
+    <h2 class="subhead">Gastronomie</h2>
+    <ul class="styled">
+      <li><strong>Am Strand (Sommer):</strong> Zwei Imbisswagen (Pommes, Wurst, Crêpes, Eis) und zwei Strandaufgänge weiter der Seestern-Imbiss</li>
+      <li><strong>Café Redlich in Harkensee</strong> (10 min zu Fuß, Frühjahr/Sommer): Eis, Kuchen etc.</li>
+      <li><strong>Gutshaus Harkensee</strong> (15 min zu Fuß): Restaurant</li>
+      <li><strong>Am Priwall:</strong> Dünenpavillon (rustikales Fischrestaurant) und weitere nette Lokale</li>
+      <li><strong>Travemünde:</strong> Hafen mit Fischverkauf, Fischbrötchenbuden, Restaurants &amp; Eiscafés an der Promenade</li>
+      <li>Wer Lust auf Fahrradtouren hat, findet auch entlang des Ostseeradwegs in Richtung Boltenhagen noch nette Cafés und Restaurants.</li>
+    </ul>
+ 
+
+    <h2 class="subhead">Supermärkte</h2>
+    <div class="bento-facts-grid" style="margin-top:1rem">
+      <div class="bento-fact-card">
+        <span class="bento-fact-label">🛒 Am Priwall</span>
+        <div class="bento-fact-value" style="font-size: 1.8rem;">Edeka</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-top:0.4rem">~10 min Auto / 30 min Rad</p>
+      </div>
+      <div class="bento-fact-card">
+        <span class="bento-fact-label">🛒 Dassow</span>
+        <div class="bento-fact-value" style="font-size: 1.8rem;">Penny · Norma</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-top:0.4rem">~10 min Auto</p>
+      </div>
+      <div class="bento-fact-card">
+        <span class="bento-fact-label">🛒 Schönberg</span>
+        <div class="bento-fact-value" style="font-size: 1.8rem;">Rewe · Aldi · Lidl</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-top:0.4rem">~20 min Auto</p>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <span class="footer-logo">Ostseehaus Barendorf</span>
+    <p>Barendorf · Ortsteil von Dassow · Mecklenburg-Vorpommern</p>
+  </footer>
+</div>
+ 
+<!-- ════════════════════════════════ -->
+<!-- PAGE: PREISE                     -->
+<!-- ════════════════════════════════ -->
+<div id="page-preise" class="page">
+  <div class="content-wrap">
+    <h1 class="page-title">Preise</h1>
+    <p class="page-subtitle">Wir vermieten im Freundes- und Bekanntenkreis so, dass die laufenden Kosten gedeckt sind.</p>
+ 
+    <p class="body-text"> Das bedeutet, dass wir pro Nacht zwischen 60 und 200 Euro veranschlagen, je nachdem wann ihr das Haus mieten möchtet, mit wie vielen Personen ihr kommt und wie eure finanzielle Situation ist.</p>
+ 
+    <!-- Price table -->
+    <table class="price-table">
+      <thead>
+        <tr>
+          <th>Saison</th>
+          <th>Zeitraum</th>
+          <th>Basispreis (2 Pers.)</th>
+          <th>+ je weitere Person</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Hauptsaison</strong></td>
+          <td>Juli · August · Feiertage*</td>
+          <td class="price-col">100 €/Nacht</td>
+          <td>+10 €</td>
+        </tr>
+        <tr>
+          <td><strong>Zwischensaison</strong></td>
+          <td>Mai · Juni · September</td>
+          <td class="price-col">80 €/Nacht</td>
+          <td>+10 €</td>
+        </tr>
+        <tr>
+          <td><strong>Nebensaison</strong></td>
+          <td>Übrige Monate</td>
+          <td class="price-col">60 €/Nacht</td>
+          <td>+10 €</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.82rem;color:var(--muted);margin-bottom:2rem">* Ostern, Pfingsten, Himmelfahrt, Silvester &amp; Weihnachten gelten als Hauptsaison – kann der Rechner nicht abbilden.</p>
+ 
+    <div style="background:var(--foam);padding:1.2rem 1.5rem;border-left:4px solid var(--sea);margin-bottom:2rem;font-size:0.92rem;font-weight:300">
+      <strong>Ab 6 Nächten:</strong> 20 € Rabatt pro Nacht.
+    </div>
+ 
+    <!-- Price Calculator (FIXED: proper date inputs, no console.log) -->
+    <div class="calc-box">
+      <h2 class="calc-title">Preisrechner</h2>
+      <div class="calc-grid">
+        <div class="form-group">
+          <label class="form-label" for="calcStart">Anreise</label>
+          <input class="form-input" type="date" id="calcStart" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="calcEnd">Abreise</label>
+          <input class="form-input" type="date" id="calcEnd" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="calcPersons">Personen</label>
+          <input class="form-input" type="number" id="calcPersons" min="1" max="12" value="2" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" style="visibility:hidden">–</label>
+          <button class="btn btn-solid" onclick="calculatePrice()" style="white-space:nowrap">Berechnen</button>
+        </div>
+      </div>
+      <div class="calc-result" id="calcResult">
+        <div class="result-amount" id="calcTotal">–</div>
+        <div class="result-detail" id="calcDetail">–</div>
+      </div>
+      <p class="calc-note">⚠ Feiertage (Ostern, Pfingsten, Himmelfahrt, Weihnachten, Silvester) gelten als Hauptsaison, bitte separat anfragen.</p>
+    </div>
+ 
+    <h2 class="subhead">Flexible Regelungen</h2>
+    <ul class="styled">
+      <li>Wenn euch diese Preise aufgrund eurer derzeitigen Einkommenssituation zu hoch sind, finden wir gemeinsam einen passenden Preis.</li>
+      <li>Grundsätzlich könnt ihr das Haus auch mit wenigen Personen nutzen, z.B. alleine oder zu zweit, und dann bei Bedarf auch den Preis am unteren Rand zahlen. Allerdings würden wir für begehrte Zeiträume im Zweifel größeren Gruppen den Vorrang geben.</li>
+      <li>Das Gleiche gilt für kurze Aufenthalte. Außerhalb der Hauptsaison könnt ihr das Haus auch für ein Wochenende nutzen. In der Hauptsaison und an langen Wochenenden (Himmelfahrt/Pfingsten) und Silvester würden wir das Haus gerne für mindestens drei Nächte am Stück, in den Sommerferien gerne länger vermieten. Kürzere Aufenthalte sind dann eher spontan möglich, wenn das Haus kurzfristig noch frei ist.</li>
+    </ul>
+ 
+    <h2 class="subhead">Helfer*innen-Tarif</h2>
+    <p class="body-text">Wer Lust hat, aktiv bei der Instandhaltung und Pflege von Haus und Garten mitzuhelfen, ist dazu herzlich eingeladen und kann je nach Umfang das Haus in dem Zeitraum zu einem reduzierten Tarif nutzen (Beispiele: Schuppen reparieren, Fahrräder reparieren, Gartenarbeit etc).</p>
+ 
+    <h2 class="subhead">Gartengruppe</h2>
+    <p class="body-text">Insbesondere freuen wir uns, wenn sich ein paar Gärtner*innen finden, die Lust haben, den Naturgarten dauerhaft mitzugestalten und zu diesem Zweck regelmäßig zu kommen und kostenfrei zu übernachten. Bei Interesse gerne melden.</p>
+ 
+    <h2 class="subhead">Putzdienst zubuchbar</h2>
+    <p class="body-text">Wer keine Lust auf Putzen hat, kann auch eine Endreinigung für 125 Euro dazu buchen. Das setzt voraus, dass nicht am gleichen Tag die nächsten Gäste anreisen und die Putzhilfe an dem Tag Zeit hat. Bitte bei der Buchung besprechen.</p>
+  </div>
+  <footer>
+    <span class="footer-logo">Ostseehaus Barendorf</span>
+    <p>Barendorf · Ortsteil von Dassow · Mecklenburg-Vorpommern</p>
+  </footer>
+</div>
+ 
+<!-- ════════════════════════════════ -->
+<!-- PAGE: VERFÜGBARKEIT              -->
+<!-- ════════════════════════════════ -->
+<div id="page-verfuegbar" class="page">
+ 
+  <!-- Full-page background: cranes/field photo like the original kraniche.jpg -->
+  <div style="
+    min-height: 100vh;
+    background: url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1800&auto=format&fit=crop&q=80') center center / cover no-repeat fixed;
+    position: relative;
+  ">
+    <!-- Overlay for readability -->
+    <div style="
+      position: absolute; inset: 0;
+      background: rgba(240,228,206,0.82);
+      backdrop-filter: blur(1px);
+    "></div>
+ 
+    <!-- Content (right-aligned like original) -->
+    <div style="
+      position: relative; z-index: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      gap: 3rem;
+      padding: 3rem 3rem 4rem;
+      flex-wrap: wrap;
+    ">
+      <!-- Left: Title + note -->
+      <div style="flex: 0 0 auto; max-width: 320px; padding-top: 1rem;">
+        <h1 style="
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(2.4rem, 4vw, 3.5rem);
+          font-weight: 500;
+          color: var(--gold);
+          line-height: 1.15;
+          margin-bottom: 1.5rem;
+          text-shadow: 1px 2px 8px rgba(0,0,0,0.15);
+        ">Verfügbarkeit<br>prüfen</h1>
+ 
+        <p style="font-size: 1rem; line-height: 1.7; font-weight: 300; color: var(--text); margin-bottom: 1rem;">
+          Rot markierte Tage sind bereits belegt.
+        </p>
+        <p style="font-size: 0.9rem; font-weight: 300; color: var(--muted); font-style: italic; margin-bottom: 1.5rem;">
+          Der Kalender gibt keine Gewähr, dass freie Zeiträume tatsächlich gebucht werden können. Bitte per E-Mail anfragen:
+        </p>
+        <a href="mailto:ostseehaus@posteo.de"
+           style="color: var(--gold); font-weight: 600; text-decoration: underline; word-break: break-all; font-size: 0.95rem;">
+          ostseehaus@posteo.de
+        </a>
+ 
+        <!-- Legend -->
+        <div style="margin-top: 2rem; font-size: 0.85rem; font-weight: 400;">
+          <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.5rem;">
+            <div style="width:16px;height:16px;background:rgba(200,80,80,0.35);border-radius:3px;flex-shrink:0"></div>
+            Belegt
+          </div>
+          <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.5rem;">
+            <div style="width:16px;height:16px;background:rgba(200,221,229,0.6);border-radius:3px;flex-shrink:0;border:1px solid rgba(0,0,0,0.1)"></div>
+            Heute
+          </div>
+          <div style="display:flex; align-items:center; gap:0.6rem;">
+            <div style="width:16px;height:16px;background:rgba(255,255,255,0.7);border-radius:3px;flex-shrink:0;border:1px solid #ccc"></div>
+            Frei / anfragen
+          </div>
+        </div>
+ 
+        <div style="margin-top: 2.5rem;">
+          <a href="mailto:ostseehaus@posteo.de" class="btn btn-solid" style="display:inline-block; font-size:0.78rem;">
+            ✉ Jetzt anfragen
+          </a>
+        </div>
+      </div>
+ 
+      <!-- Right: Calendar -->
+      <div style="flex: 1 1 600px; max-width: 820px;">
+        <div id="teamup-calendar" style="
+          background: rgba(255,255,255,0.88);
+          border-radius: 2px;
+          padding: 1.5rem;
+          box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+        "></div>
+        <p id="cal-error" style="display:none; color:#c00; font-size:0.85rem; margin-top:0.8rem; padding: 0.8rem 1rem; background:rgba(255,255,255,0.85);">
+          ⚠ Kalender konnte nicht geladen werden. Bitte direkt per E-Mail anfragen.
+        </p>
+      </div>
+    </div>
+  </div>
+ 
+  <footer>
+    <span class="footer-logo">Ostseehaus Barendorf</span>
+    <p>Barendorf · Ortsteil von Dassow · Mecklenburg-Vorpommern</p>
+  </footer>
+</div>
+ 
+<!-- ── JAVASCRIPT ── -->
 <script>
-  // Menü per fetch laden
-  fetch('menu.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('menu-container').innerHTML = data;
+  /* ── Globale Variablen ── */
+  let calendarInitialized = false;
 
-      // Menü-Interaktion initialisieren
-      const toggle = document.getElementById('menu-toggle');
-      const overlay = document.getElementById('menu-overlay');
-      const closeBtn = document.getElementById('menu-close');
+  /* ── SPA Navigation ── */
+  function showPage(id) {
+    // Alle Seiten ausblenden
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    // Gewünschte Seite einblenden
+    document.getElementById('page-' + id).classList.add('active');
+    
+    // Aktiven Menüpunkt stylen
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.classList.toggle('active', a.dataset.page === id);
+    });
+    
+    // Nach oben scrollen
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    initFadeIns();
 
-      toggle.addEventListener('click', () => overlay.classList.add('open'));
-      closeBtn.addEventListener('click', () => overlay.classList.remove('open'));
-    })
-    .catch(err => console.error("Menü konnte nicht geladen werden:", err));
+    // NEU & KORRIGIERT: Kalender direkt hier initialisieren, wenn die Seite geöffnet wird
+    if (id === 'verfuegbar' && !calendarInitialized && typeof FullCalendar !== 'undefined') {
+      calendarInitialized = true;
+      setTimeout(initTeamupCalendar, 50);
+    }
+  }
+ 
+  /* ── Hamburger Menü ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+ 
+  /* ── Navbar scroll ── */
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+  });
+ 
+  /* ── Fade-in observer ── */
+  function initFadeIns() {
+    const els = document.querySelectorAll('.fade-in:not(.visible)');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    els.forEach(el => obs.observe(el));
+  }
+  initFadeIns();
+ 
+  /* ── Price Calculator ── */
+  function getSeasonBasePrice(month) {
+    if (month === 7 || month === 8) return 100;       
+    if (month === 5 || month === 6 || month === 9) return 80; 
+    return 60;                                          
+  }
+ 
+  function calculatePrice() {
+    const startVal = document.getElementById('calcStart').value;
+    const endVal   = document.getElementById('calcEnd').value;
+    const persons  = parseInt(document.getElementById('calcPersons').value) || 1;
+    const result   = document.getElementById('calcResult');
+ 
+    if (!startVal || !endVal) {
+      result.classList.remove('visible');
+      alert('Bitte An- und Abreisedatum auswählen.');
+      return;
+    }
+ 
+    const start = new Date(startVal);
+    const end   = new Date(endVal);
+    const msPerDay = 86400000;
+    const nights = Math.round((end - start) / msPerDay);
+ 
+    if (nights <= 0) {
+      result.classList.remove('visible');
+      alert('Das Abreisedatum muss nach dem Anreisedatum liegen.');
+      return;
+    }
+ 
+    let total = 0;
+    for (let i = 0; i < nights; i++) {
+      const day = new Date(start.getTime() + i * msPerDay);
+      const month = day.getMonth() + 1;
+      let nightPrice = getSeasonBasePrice(month);
+      if (persons > 2) nightPrice += (persons - 2) * 10;
+      if (nights >= 6) nightPrice -= 20;
+      total += nightPrice;
+    }
+ 
+    const avg = Math.round(total / nights);
+    document.getElementById('calcTotal').textContent = total.toLocaleString('de-DE') + ' €';
+    document.getElementById('calcDetail').textContent =
+      `${nights} Nächte · ${persons} Person${persons !== 1 ? 'en' : ''} · Ø ${avg} €/Nacht` +
+      (nights >= 6 ? ' · inkl. Langzeitrabatt' : '');
+    result.classList.add('visible');
+  }
+ 
+  /* Allow Enter key in calculator */
+  ['calcStart','calcEnd','calcPersons'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => {
+      if (e.key === 'Enter') calculatePrice();
+    });
+  });
+ 
+  /* Set min date for calculator to today */
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('calcStart').min = today;
+  document.getElementById('calcEnd').min = today;
+ 
+  /* ── Teamup Calendar ── */
+  const TEAMUP_KEY    = 'kst191rn45qwyb4fqd';
+  const TEAMUP_TOKEN  = 'f4eda7a56be8458848d72acae9dfb79102073d0bc4662d49543058ff2528c025';
+  const SUBCAL_IDS    = '14791862,14791863';
+ 
+  function initTeamupCalendar() {
+    const calEl = document.getElementById('teamup-calendar');
+    if (!calEl) return;
+ 
+    const cal = new FullCalendar.Calendar(calEl, {
+      locale: 'de',
+      initialView: 'multiMonthTwo',
+      firstDay: 1,
+      timeZone: 'local',
+      height: 'auto',
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: ''
+      },
+      views: {
+        multiMonthTwo: {
+          type: 'multiMonth',
+          duration: { months: 2 }
+        }
+      },
+      customButtons: {
+        next: {
+          text: '›',
+          click: function() {
+            const cur = cal.view.currentStart;
+            const next = new Date(cur);
+            next.setMonth(next.getMonth() + 1);
+            cal.gotoDate(next);
+          }
+        },
+        prev: {
+          text: '‹',
+          click: function() {
+            const cur = cal.view.currentStart;
+            const prev = new Date(cur);
+            prev.setMonth(prev.getMonth() - 1);
+            cal.gotoDate(prev);
+          }
+        }
+      },
+      events: function(fetchInfo, successCallback, failureCallback) {
+        const start = fetchInfo.startStr.substring(0, 10);
+        const end   = fetchInfo.endStr.substring(0, 10);
+        const url   = `https://api.teamup.com/${TEAMUP_KEY}/events?startDate=${start}&endDate=${end}&subcalendarIds=${SUBCAL_IDS}`;
+ 
+        fetch(url, { headers: { 'Teamup-Token': TEAMUP_TOKEN } })
+          .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+          .then(data => {
+            const events = (data.events || []).map(ev => ({
+              start:      ev.start_dt,
+              end:        ev.end_dt,
+              allDay:     ev.all_day,
+              display:    'background',
+              classNames: ['busy-day'],
+              title:      'Belegt'
+            }));
+            successCallback(events);
+          })
+          .catch(err => {
+            document.getElementById('cal-error').style.display = 'block';
+            failureCallback(err);
+          });
+      }
+    });
+ 
+    cal.render();
+  }
 </script>
-
-  <!-- Dein JavaScript -->
-  <script>
-    const hinweisBox = document.getElementById('mobile-hinweis');
-    const schliessenButton = document.getElementById('hinweis-schliessen');
-
-    // Geräteerkennung (einfache Variante)
-    const istMobil = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-    if (istMobil && hinweisBox) {
-      hinweisBox.style.display = "flex"; // Nur auf echten Mobilgeräten anzeigen
-    }
-
-    if (hinweisBox && schliessenButton) {
-      schliessenButton.addEventListener('click', () => {
-        hinweisBox.style.display = 'none';
-      });
-    }
-  </script>
-  
 </body>
 </html>
