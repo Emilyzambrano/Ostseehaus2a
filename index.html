@@ -531,24 +531,6 @@
 </style>
 </head>
 <body>
- 
-<div style="
-  background: var(--sea2);
-  color: var(--foam);
-  text-align: center;
-  padding: 0.5rem 1rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  display: none;
-" id="mobile-hint">
-    Für bessere Ansicht Handy quer halten oder am Laptop öffnen
-</div>
-
-<script>
-  if (window.innerWidth < 768) {
-    document.getElementById('mobile-hint').style.display = 'block';
-  }
-</script>
 
 <!-- ── NAVIGATION ── -->
 <nav id="navbar">
@@ -564,6 +546,28 @@
     <span></span><span></span><span></span>
   </button>
 </nav>
+
+<div id="mobile-hint" style="
+  background: #2a4f5e;
+  color: #ffffff;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  display: none;
+  position: fixed;
+  top: 4.2rem;
+  left: 0; right: 0;
+  z-index: 98;
+">
+   Für bessere Ansicht Handy quer halten oder am Laptop öffnen
+</div>
+
+<script>
+  if (window.innerWidth < 768) {
+    document.getElementById('mobile-hint').style.display = 'block';
+  }
+</script>
  
 <!-- ── MOBILE MENU ── -->
 <div class="mobile-menu" id="mobileMenu">
